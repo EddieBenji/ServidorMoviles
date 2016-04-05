@@ -87,11 +87,12 @@ class WaitThread implements Runnable {
         }
     }
 
+    private String path = "copy.txt";
+
     private void readFile(InputStream in) throws IOException {
         int filesize = 2022386;
         int bytesRead;
         int currentTot;
-        String path = "copy.txt";
 
         byte[] bytearray = new byte[filesize];
         FileOutputStream fos = new FileOutputStream(path);
@@ -105,6 +106,27 @@ class WaitThread implements Runnable {
         bos.write(bytearray, 0, currentTot);
         bos.flush();
         bos.close();
+    }
+
+    private void readFileWritten() {
+        BufferedReader br = null;
+
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(path));
+
+            while ((sCurrentLine = br.readLine()) != null)
+                System.out.println(sCurrentLine);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) br.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     private void procesaCmd(int cmd) {
